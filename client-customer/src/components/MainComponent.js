@@ -11,6 +11,7 @@ import Myprofile from './MyprofileComponent';
 import Mycart from './MycartComponent';
 import Myorders from './MyordersComponent';
 import Footer from './FooterComponent';
+import Chatbot from './ChatbotComponent';
 
 import { Routes, Route, Navigate } from 'react-router-dom';
 import './Main.css';
@@ -47,6 +48,7 @@ class Main extends Component {
         </div>
 
         <Footer />
+        <Chatbot />
       </div>
     );
   }
