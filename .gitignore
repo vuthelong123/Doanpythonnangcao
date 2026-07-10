@@ -1,0 +1,10 @@
+venv/
+.venv/
+__pycache__/
+node_modules/
+temp.txt
+temp2.txt
+files.txt
+git_status.txt
+logs.txt
+.env
