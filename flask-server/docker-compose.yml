@@ -5,6 +5,9 @@ services:
     build: .
     ports:
       - "3000:3000"
+    volumes:
+      - ../client-customer/build:/client-customer/build
+      - ../client-admin/build:/client-admin/build
     environment:
       - DB_HOST=host.docker.internal
       - DB_PORT=3306
@@ -12,5 +15,6 @@ services:
       - DB_PASSWORD=123456
       - DB_NAME=shoppingonline
       - PORT=3000
+      - BREVO_API_KEY=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
     extra_hosts:
       - "host.docker.internal:host-gateway"

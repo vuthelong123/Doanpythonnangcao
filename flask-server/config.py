@@ -8,5 +8,5 @@ class Config:
     DB_DATABASE = os.environ.get('DB_NAME', 'shoppingonline')
     JWT_SECRET = '70addbf370449269b7685058e81215444314830c3b28783ce0a1551277b647391e14832be3610ffb17cc5ab91470de9ff385a63ee0523128a72455a6d1d7941e'
     JWT_EXPIRES_MINUTES = 600 # 10 hours
-    # Hãy lấy api-key từ file .env ở NodeJS cũ (hoặc tài khoản Brevo) và dán vào đây:
-    BREVO_API_KEY = "ĐIỀN-KEY-CỦA-BẠN-VÀO-ĐÂY"
+    # Bỏ chữ Đ có dấu đi để không bị lỗi mã hóa latin-1 của thư viện requests nếu không lấy được biến từ Docker:
+    BREVO_API_KEY = os.environ.get('BREVO_API_KEY', "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")
