@@ -189,7 +189,7 @@ def chat_with_bot():
             # genai.configure(api_key="PASTE_YOUR_API_KEY_HERE_FOR_TESTING")
             pass
             
-        genai.configure(api_key=os.environ.get("GEMINI_API_KEY", "AIzaSyBevXx1IboO3jdUuxkx4OXCIf9o48QNpZs"))
+        genai.configure(api_key=os.environ.get("GEMINI_API_KEY"))
         model = genai.GenerativeModel('gemini-2.5-flash')
         
         products = ProductDAO.select_all()
@@ -218,4 +218,17 @@ Câu hỏi của khách hàng: {user_message}
         return jsonify({'reply': reply_text})
     except Exception as e:
         print("Chatbot Error:", e)
-        return jsonify({'reply': 'Xin lỗi, hiện tại tôi đang gặp sự cố. Vui lòng liên hệ trực tiếp với nhân viên qua hotline!'})
+        # BỘ LÃO CHATBOT DỰ PHÒNG (Khi Gemini bị khóa)
+        user_message_lower = user_message.lower()
+        if "xin chào" in user_message_lower or "hi" in user_message_lower or "alo" in user_message_lower:
+            fallback_reply = "Chào bạn! Mình là trợ lý ảo của shop. Hiện tại hệ thống AI thông minh đang bảo trì, nhưng mình vẫn có thể giúp bạn tìm máy tính! Bạn muốn tìm laptop hãng nào (Asus, MSI, Dell...) hay tầm giá bao nhiêu?"
+        elif "asus" in user_message_lower:
+            fallback_reply = "Bên mình đang có 'Laptop ASUS Gaming V16' giá 24,990,000đ và 'ASUS VivoBook' giá cực tốt! Bạn muốn xem thử mẫu Gaming hay Văn phòng?"
+        elif "msi" in user_message_lower:
+             fallback_reply = "Các dòng MSI bên mình đang rất hot! Đặc biệt là các dòng Gaming cấu hình cao. Bạn có muốn tham khảo dòng MSI Bravo hay Cyborg không?"
+        elif "giá" in user_message_lower or "rẻ" in user_message_lower:
+             fallback_reply = "Bên mình có đa dạng phân khúc giá! Từ 15 triệu cho sinh viên đến 50 triệu cho game thủ hardcore. Bạn đang nhắm khoảng tài chính bao nhiêu?"
+        else:
+             fallback_reply = "Hiện tại tính năng AI chuyên sâu đang bảo trì (do sự cố Google API). Nhưng cửa hàng vẫn đang hoạt động bình thường! Bạn có thể xem danh sách sản phẩm ở trang chủ hoặc gọi Hotline để nhân viên tư vấn trực tiếp nha!"
+        
+        return jsonify({'reply': fallback_reply})
